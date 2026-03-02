@@ -1,3 +1,5 @@
+"use client";
+
 import { Wind, X } from "lucide-react";
 
 type Product = {
@@ -165,13 +167,13 @@ export default function CataloguePage() {
             </div>
             <span className="font-bold text-sm text-[var(--color-text-main)]">MarketAir Product Catalogue</span>
           </div>
-          <a
-            href="/"
+          <button
+            onClick={() => window.close()}
             className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors duration-200"
           >
             <X className="w-4 h-4" />
             Close
-          </a>
+          </button>
         </div>
       </div>
 
