@@ -2,6 +2,9 @@ import Image from "next/image";
 import { ArrowRight, MapPin } from "lucide-react";
 
 export default function Hero() {
+  const titleOutline =
+    "-1px -1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(255,255,255,0.95), 1px -1px 0 rgba(255,255,255,0.95), -1px 0 0 rgba(255,255,255,0.95), 1px 0 0 rgba(255,255,255,0.95), -1px 1px 0 rgba(255,255,255,0.95), 0 1px 0 rgba(255,255,255,0.95), 1px 1px 0 rgba(255,255,255,0.95), 0 6px 20px rgba(0,0,0,0.34)";
+
   return (
     <section className="relative h-screen min-h-[620px] flex items-center">
       {/* Background image */}
@@ -52,12 +55,11 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.02] mb-4">
+          <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-[8.2rem] font-black tracking-tight leading-[0.98] mb-4">
             <span
               style={{
                 color: "#74d680",
-                WebkitTextStroke: "1px rgba(255,255,255,0.9)",
-                textShadow: "0 4px 18px rgba(0,0,0,0.28)",
+                textShadow: titleOutline,
               }}
             >
               Market
@@ -65,8 +67,7 @@ export default function Hero() {
             <span
               style={{
                 color: "#5bcaf7",
-                WebkitTextStroke: "1px rgba(255,255,255,0.9)",
-                textShadow: "0 4px 18px rgba(0,0,0,0.28)",
+                textShadow: titleOutline,
               }}
             >
               Air

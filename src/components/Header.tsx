@@ -22,20 +22,21 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group" aria-label="MarketAir home">
-            <div className="relative w-9 h-9 rounded-xl overflow-hidden transition-all duration-300 group-hover:-translate-y-0.5">
+          <a
+            href="#"
+            className="group flex h-full items-center -ml-4 sm:-ml-6 lg:-ml-8"
+            aria-label="MarketAir home"
+          >
+            <div className="relative h-full w-[160px] sm:w-[185px] lg:w-[220px] overflow-hidden transition-all duration-300 group-hover:-translate-y-0.5">
               <Image
                 src="/images/marketair logo.avif"
                 alt="MarketAir logo"
                 fill
-                sizes="36px"
-                className="object-cover"
+                sizes="(min-width: 1024px) 220px, (min-width: 640px) 185px, 160px"
+                className="object-contain object-left"
                 priority
               />
             </div>
-            <span className="font-bold text-lg tracking-tight" style={{ color: "var(--color-text-main)" }}>
-              MarketAir
-            </span>
           </a>
 
           {/* Desktop nav */}
