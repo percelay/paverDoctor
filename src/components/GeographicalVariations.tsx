@@ -130,19 +130,80 @@ type USRegionId =
   | "southeast"
   | "florida";
 
-type USRegion = {
-  id: USRegionId;
+type CanadaRegionId = "westernCanada" | "easternCanada";
+type RegionId = USRegionId | CanadaRegionId;
+
+type MapRegion = {
+  id: RegionId;
   territory: string;
   rep: string;
-  stateCodes: string[];
   stateNames: string[];
-  notes?: string;
   mapPoint: { x: number; y: number };
   labelPoint: { x: number; y: number };
   labelAnchor: "start" | "middle" | "end";
+  stateCodes?: string[];
 };
 
-const US_REGIONS: USRegion[] = [
+type USMapRegion = MapRegion & {
+  id: USRegionId;
+  stateCodes: string[];
+};
+
+type CanadaMapRegion = MapRegion & {
+  id: CanadaRegionId;
+};
+
+const MAP_SCALE = 0.62;
+const MAP_OFFSET_X = 470;
+const MAP_OFFSET_Y = 330;
+
+const toCanvasX = (sourceX: number) => MAP_OFFSET_X + sourceX * MAP_SCALE;
+const toCanvasY = (sourceY: number) => MAP_OFFSET_Y + sourceY * MAP_SCALE;
+
+const CANADA_REGION_PATHS: Record<CanadaRegionId, string> = {
+  westernCanada:
+    "M95 -40 L150 -75 L230 -95 L320 -105 L405 -95 L470 -75 L500 -40 L470 -8 L390 8 L300 20 L210 15 L140 5 L100 -15 Z",
+  easternCanada:
+    "M500 -40 L540 -70 L620 -88 L700 -82 L770 -60 L835 -30 L860 5 L845 30 L790 36 L720 30 L640 42 L560 28 L510 10 Z",
+};
+
+const CANADA_REGIONS: CanadaMapRegion[] = [
+  {
+    id: "westernCanada",
+    territory: "Western Canada",
+    rep: "Alliance Marketing",
+    stateNames: [
+      "British Columbia",
+      "Alberta",
+      "Saskatchewan",
+      "Manitoba",
+      "Yukon",
+      "Northwest Territories",
+      "Nunavut",
+    ],
+    mapPoint: { x: 330, y: -44 },
+    labelPoint: { x: 220, y: 170 },
+    labelAnchor: "end",
+  },
+  {
+    id: "easternCanada",
+    territory: "Eastern Canada",
+    rep: "Fowler Sales Agency",
+    stateNames: [
+      "Ontario",
+      "Quebec",
+      "New Brunswick",
+      "Nova Scotia",
+      "Prince Edward Island",
+      "Newfoundland and Labrador",
+    ],
+    mapPoint: { x: 690, y: -30 },
+    labelPoint: { x: 1410, y: 170 },
+    labelAnchor: "start",
+  },
+];
+
+const US_REGIONS: USMapRegion[] = [
   {
     id: "pacificNorthwest",
     territory: "Pacific Northwest",
@@ -150,7 +211,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["WA", "OR", "ID", "AK"],
     stateNames: ["Washington", "Oregon", "Idaho", "Alaska"],
     mapPoint: { x: 136, y: 88 },
-    labelPoint: { x: 78, y: 98 },
+    labelPoint: { x: 220, y: 360 },
     labelAnchor: "end",
   },
   {
@@ -160,7 +221,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["CA", "AZ", "HI"],
     stateNames: ["California", "Arizona", "Hawaii", "Nevada (west + Las Vegas area)"],
     mapPoint: { x: 138, y: 318 },
-    labelPoint: { x: 78, y: 246 },
+    labelPoint: { x: 220, y: 520 },
     labelAnchor: "end",
   },
   {
@@ -170,7 +231,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["CO", "UT", "WY", "MT", "NV"],
     stateNames: ["Colorado", "Utah", "Wyoming", "Montana", "Nevada (east, except Las Vegas)"],
     mapPoint: { x: 320, y: 254 },
-    labelPoint: { x: 382, y: 124 },
+    labelPoint: { x: 740, y: 190 },
     labelAnchor: "middle",
   },
   {
@@ -180,7 +241,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["TX", "NM", "OK", "AR", "LA"],
     stateNames: ["Texas", "New Mexico", "Oklahoma", "Arkansas", "Louisiana"],
     mapPoint: { x: 454, y: 424 },
-    labelPoint: { x: 388, y: 554 },
+    labelPoint: { x: 720, y: 940 },
     labelAnchor: "middle",
   },
   {
@@ -205,7 +266,7 @@ const US_REGIONS: USRegion[] = [
       "West Virginia",
     ],
     mapPoint: { x: 558, y: 242 },
-    labelPoint: { x: 620, y: 104 },
+    labelPoint: { x: 980, y: 190 },
     labelAnchor: "middle",
   },
   {
@@ -215,7 +276,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["ME", "NH", "VT", "MA", "RI", "CT", "NY"],
     stateNames: ["Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", "Connecticut", "New York (upstate)"],
     mapPoint: { x: 868, y: 134 },
-    labelPoint: { x: 1010, y: 98 },
+    labelPoint: { x: 1410, y: 330 },
     labelAnchor: "start",
   },
   {
@@ -233,7 +294,7 @@ const US_REGIONS: USRegion[] = [
       "NYC Metro + Long Island",
     ],
     mapPoint: { x: 808, y: 238 },
-    labelPoint: { x: 1010, y: 170 },
+    labelPoint: { x: 1410, y: 480 },
     labelAnchor: "start",
   },
   {
@@ -243,7 +304,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["NC", "SC"],
     stateNames: ["North Carolina", "South Carolina"],
     mapPoint: { x: 754, y: 346 },
-    labelPoint: { x: 1010, y: 252 },
+    labelPoint: { x: 1410, y: 620 },
     labelAnchor: "start",
   },
   {
@@ -253,7 +314,7 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["GA", "AL", "TN", "MS"],
     stateNames: ["Georgia", "Alabama", "Tennessee", "Mississippi", "Western Florida panhandle"],
     mapPoint: { x: 692, y: 398 },
-    labelPoint: { x: 1010, y: 334 },
+    labelPoint: { x: 1410, y: 770 },
     labelAnchor: "start",
   },
   {
@@ -263,12 +324,16 @@ const US_REGIONS: USRegion[] = [
     stateCodes: ["FL"],
     stateNames: ["Florida (except panhandle west of GA/AL border)"],
     mapPoint: { x: 802, y: 500 },
-    labelPoint: { x: 1010, y: 434 },
+    labelPoint: { x: 1410, y: 910 },
     labelAnchor: "start",
   },
 ];
 
-const REGION_FILL: Record<USRegionId, string> = {
+const MAP_REGIONS: MapRegion[] = [...CANADA_REGIONS, ...US_REGIONS];
+
+const REGION_FILL: Record<RegionId, string> = {
+  westernCanada: "rgba(160, 220, 252, 0.36)",
+  easternCanada: "rgba(120, 188, 224, 0.36)",
   pacificNorthwest: "#cfe8ff",
   westHawaii: "#ffd8be",
   mountainWest: "#ffefbf",
@@ -281,7 +346,9 @@ const REGION_FILL: Record<USRegionId, string> = {
   florida: "#fdd3dc",
 };
 
-const REGION_FILL_ACTIVE: Record<USRegionId, string> = {
+const REGION_FILL_ACTIVE: Record<RegionId, string> = {
+  westernCanada: "rgba(114, 208, 255, 0.7)",
+  easternCanada: "rgba(97, 176, 221, 0.7)",
   pacificNorthwest: "#8ab8ea",
   westHawaii: "#ffb27e",
   mountainWest: "#f6cf6b",
@@ -299,9 +366,9 @@ const STATE_TO_REGION = US_REGIONS.reduce((acc, region) => {
     acc[code] = region.id;
   });
   return acc;
-}, {} as Record<string, USRegionId>);
+}, {} as Record<string, RegionId>);
 
-function wrapStates(states: string[], maxLineLength = 36) {
+function wrapStates(states: string[], maxLineLength = 40) {
   const lines: string[] = [];
   let currentLine = "";
 
@@ -327,39 +394,62 @@ function wrapStates(states: string[], maxLineLength = 36) {
 }
 
 function VersionInteractive() {
-  const [hoveredRegion, setHoveredRegion] = useState<USRegionId | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<USRegionId | null>(null);
+  const [hoveredRegion, setHoveredRegion] = useState<RegionId | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState<RegionId | null>(null);
   const activeRegionId = hoveredRegion ?? selectedRegion;
 
-  const activate = (id: USRegionId) => setHoveredRegion(id);
-  const toggleSelection = (id: USRegionId) =>
+  const activate = (id: RegionId) => setHoveredRegion(id);
+  const toggleSelection = (id: RegionId) =>
     setSelectedRegion((prev) => (prev === id ? null : id));
 
   return (
     <div>
       <div className="mb-6">
         <span className="glass-chip inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[var(--color-primary-2)] text-xs font-semibold uppercase tracking-widest">
-          Version 2 - Interactive U.S. Territory Map
+          Version 2 - Interactive North America Territory Map
         </span>
       </div>
 
       <div className="glass-card-strong rounded-2xl p-3 md:p-4">
         <div className="overflow-x-auto">
           <div
-            className="min-w-[1080px]"
+            className="min-w-[1520px]"
             onMouseLeave={() => setHoveredRegion(null)}
           >
             <svg
-              viewBox="0 0 1200 620"
+              viewBox="0 0 1800 1100"
               className="w-full h-auto"
               role="img"
-              aria-labelledby="us-map-title"
+              aria-labelledby="rep-map-title"
             >
-              <title id="us-map-title">
-                United States manufacturer representative territory map
+              <title id="rep-map-title">
+                United States and Canada manufacturer representative territory map
               </title>
 
-              <g>
+              <g transform={`translate(${MAP_OFFSET_X} ${MAP_OFFSET_Y}) scale(${MAP_SCALE})`}>
+                {CANADA_REGIONS.map((region) => {
+                  const isActive = region.id === activeRegionId;
+                  const fillColor = isActive
+                    ? REGION_FILL_ACTIVE[region.id]
+                    : REGION_FILL[region.id];
+                  const strokeColor = isActive
+                    ? "rgba(95, 201, 255, 1)"
+                    : "rgba(174, 226, 255, 0.55)";
+
+                  return (
+                    <path
+                      key={region.id}
+                      d={CANADA_REGION_PATHS[region.id]}
+                      fill={fillColor}
+                      stroke={strokeColor}
+                      strokeWidth={isActive ? 3.4 : 2.2}
+                      className="cursor-pointer transition-colors duration-150"
+                      onMouseEnter={() => activate(region.id)}
+                      onClick={() => toggleSelection(region.id)}
+                    />
+                  );
+                })}
+
                 {Object.entries(US_STATE_PATHS).map(([code, state]) => {
                   const regionId = STATE_TO_REGION[code];
                   const isActive = regionId ? regionId === activeRegionId : false;
@@ -380,7 +470,7 @@ function VersionInteractive() {
                       d={state.d}
                       fill={fillColor}
                       stroke={strokeColor}
-                      strokeWidth={isActive ? 2 : 1.1}
+                      strokeWidth={isActive ? 3.2 : 2}
                       className={regionId ? "cursor-pointer transition-colors duration-150" : "transition-colors duration-150"}
                       onMouseEnter={() => regionId && activate(regionId)}
                       onClick={() => regionId && toggleSelection(regionId)}
@@ -391,28 +481,19 @@ function VersionInteractive() {
                 })}
               </g>
 
-              <text
-                x={520}
-                y={592}
-                textAnchor="middle"
-                fill="rgba(208, 239, 255, 0.8)"
-                fontSize="14"
-                fontWeight="600"
-              >
-                United States
-              </text>
-
-              {US_REGIONS.map((region) => {
+              {MAP_REGIONS.map((region) => {
                 const isActive = region.id === activeRegionId;
+                const mapX = toCanvasX(region.mapPoint.x);
+                const mapY = toCanvasY(region.mapPoint.y);
                 const lineEndX =
                   region.labelAnchor === "start"
-                    ? region.labelPoint.x - 8
+                    ? region.labelPoint.x - 14
                     : region.labelAnchor === "end"
-                    ? region.labelPoint.x + 8
+                    ? region.labelPoint.x + 14
                     : region.labelPoint.x;
                 const stateLines = wrapStates(
                   region.stateNames,
-                  region.labelAnchor === "middle" ? 40 : 34
+                  region.labelAnchor === "middle" ? 46 : 38
                 );
 
                 return (
@@ -423,16 +504,16 @@ function VersionInteractive() {
                     onClick={() => toggleSelection(region.id)}
                   >
                     <line
-                      x1={region.mapPoint.x}
-                      y1={region.mapPoint.y}
+                      x1={mapX}
+                      y1={mapY}
                       x2={lineEndX}
                       y2={region.labelPoint.y}
                       stroke={isActive ? "rgba(146, 214, 255, 0.95)" : "rgba(146, 214, 255, 0.5)"}
                       strokeWidth={isActive ? 2.6 : 1.8}
                     />
                     <circle
-                      cx={region.mapPoint.x}
-                      cy={region.mapPoint.y}
+                      cx={mapX}
+                      cy={mapY}
                       r={isActive ? 5.8 : 4.6}
                       fill={isActive ? "rgba(95, 201, 255, 1)" : "rgba(123, 187, 224, 0.8)"}
                     />
@@ -462,10 +543,10 @@ function VersionInteractive() {
                         <text
                           key={`${region.id}-states-${index}`}
                           x={region.labelPoint.x}
-                          y={region.labelPoint.y + 18 + index * 14}
+                          y={region.labelPoint.y + 26 + index * 18}
                           textAnchor={region.labelAnchor}
                           fill="rgba(160, 192, 216, 1)"
-                          fontSize="11.5"
+                          fontSize="13"
                           fontWeight="500"
                         >
                           {line}
@@ -479,12 +560,20 @@ function VersionInteractive() {
         </div>
 
         <p className="mt-4 text-xs text-[var(--color-text-muted)]">
-          Hover a bordered U.S. region or its partner name to reveal the states
-          served under that partner.
+          Hover a bordered region or its partner name to reveal the states or
+          provinces served under that partner.
         </p>
         <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-          NY, NV, and FL include sub-state splits in your territory notes; this
-          map colors those states by their primary region for clarity.
+          NY, NV, and FL include sub-state splits in your territory notes; the
+          map uses primary-area fills for those states to keep boundaries clean.
+        </p>
+        <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+          Canada is split into Western and Eastern sections based on your rep
+          coverage list.
+        </p>
+        <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+          The U.S. footprint is intentionally scaled down so all partner labels
+          and hover details live outside the map area.
         </p>
       </div>
     </div>
