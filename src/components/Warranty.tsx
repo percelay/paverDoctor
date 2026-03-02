@@ -1,0 +1,69 @@
+import { ShieldCheck } from "lucide-react";
+
+export default function Warranty() {
+  return (
+    <section id="warranty" className="py-20 bg-[var(--color-bg)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12">
+          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)] mb-3">
+            Warranty
+          </p>
+          <h2 className="text-3xl lg:text-4xl font-bold text-[var(--color-text-main)]">
+            Warranty Policy
+          </h2>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Icon card */}
+          <div className="lg:col-span-1 bg-[var(--color-primary)] rounded-2xl p-8 flex flex-col justify-between">
+            <ShieldCheck className="w-10 h-10 text-white mb-6" />
+            <div>
+              <p className="text-white/70 text-sm uppercase tracking-widest font-semibold mb-1">
+                Coverage Period
+              </p>
+              <p className="text-white text-4xl font-bold">1 Year</p>
+              <p className="text-white/80 text-sm mt-2">from date of purchase</p>
+            </div>
+          </div>
+
+          {/* Text */}
+          <div className="lg:col-span-2 bg-[var(--color-surface)] rounded-2xl p-8 shadow-sm space-y-4 text-sm text-[var(--color-text-muted)] leading-relaxed">
+            <p>
+              WARRANTIES: Goods manufactured and/or supplied by MarketAir, Inc.
+              are warranted to be free from defects in materials and workmanship
+              for a period of one (1) year from the date of purchase, when properly
+              installed and maintained and the installation complies with all
+              written specifications made by MarketAir, Inc. at the time of sale.
+            </p>
+            <p>
+              The warranty stated above is in lieu of all other warranties, express
+              or implied, including, but not limited to: the implied warranties of
+              merchantability and fitness for a particular purpose. Although
+              MarketAir, Inc. may have suggested the product, or provided written
+              or oral advice to the Purchaser, it is the Purchaser&apos;s responsibility
+              to test and determine the suitability of the Product for its intended
+              use and purpose. Purchaser and/or Purchaser&apos;s customer assume all risk
+              and liability whatsoever regarding such suitability.
+            </p>
+            <p>
+              In the event of a breach of the above warranty, MarketAir, Inc.&apos;s
+              sole obligation, and Purchaser&apos;s sole and exclusive remedy, shall be,
+              at MarketAir, Inc.&apos;s option, repair or replacement of any defective
+              products, or refund of an applicable portion of the purchase price.
+              MarketAir, Inc. shall have no liability for costs of removal or
+              reinstallation of the product. The Purchaser agrees that no other
+              remedy, including, but not limited to: loss of profits, lost sales,
+              injury to person or property, or any other special, incidental or
+              consequential damages, shall be available to the Purchaser for any
+              claim arising out of this agreement, regardless of whether such claim
+              is made in contract or in tort, including strict liability in tort. In
+              no event will MarketAir, Inc. be obligated to pay damages to the
+              Purchaser in any amount exceeding the purchase price that the
+              Purchaser paid to MarketAir, Inc. for the allegedly defective product.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
