@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import { Menu, X, Wind } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "About",     href: "#about"     },
@@ -22,14 +23,15 @@ export default function Header() {
 
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 group" aria-label="MarketAir home">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:-translate-y-0.5"
-              style={{
-                background: "linear-gradient(135deg, #5bcaf7 0%, #1e6fa8 100%)",
-                boxShadow: "0 0 16px rgba(91,202,247,0.35)",
-              }}
-            >
-              <Wind className="w-5 h-5 text-white" />
+            <div className="relative w-9 h-9 rounded-xl overflow-hidden transition-all duration-300 group-hover:-translate-y-0.5">
+              <Image
+                src="/images/marketair logo.avif"
+                alt="MarketAir logo"
+                fill
+                sizes="36px"
+                className="object-cover"
+                priority
+              />
             </div>
             <span className="font-bold text-lg tracking-tight" style={{ color: "var(--color-text-main)" }}>
               MarketAir

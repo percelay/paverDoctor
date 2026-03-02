@@ -52,11 +52,34 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.08] mb-6" style={{ color: "var(--color-text-main)" }}>
-            Components for{" "}
-            <span className="gradient-text">Environmental</span>{" "}
-            Systems
+          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.02] mb-4">
+            <span
+              style={{
+                color: "#74d680",
+                WebkitTextStroke: "1px rgba(255,255,255,0.9)",
+                textShadow: "0 4px 18px rgba(0,0,0,0.28)",
+              }}
+            >
+              Market
+            </span>
+            <span
+              style={{
+                color: "#5bcaf7",
+                WebkitTextStroke: "1px rgba(255,255,255,0.9)",
+                textShadow: "0 4px 18px rgba(0,0,0,0.28)",
+              }}
+            >
+              Air
+            </span>
           </h1>
+
+          {/* Subtitle */}
+          <p
+            className="text-xl lg:text-2xl font-semibold tracking-tight mb-6"
+            style={{ color: "rgba(233,246,255,0.95)" }}
+          >
+            Components for Environmental Systems
+          </p>
 
           {/* Subheadline */}
           <p className="text-lg leading-relaxed mb-10 max-w-2xl" style={{ color: "rgba(186,230,253,0.70)" }}>
