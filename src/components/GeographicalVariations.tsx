@@ -18,6 +18,7 @@ type USRegionId =
 
 type CanadaRegionId = "westernCanada" | "easternCanada";
 type RegionId = USRegionId | CanadaRegionId;
+type StateCode = keyof typeof US_STATE_PATHS;
 
 type MapRegion = {
   id: RegionId;
@@ -250,6 +251,47 @@ const US_REGIONS: USMapRegion[] = [
 
 const MAP_REGIONS: MapRegion[] = [...CANADA_REGIONS, ...US_REGIONS];
 
+const CONNECTOR_HIDDEN_REGIONS: RegionId[] = ["mountainWest"];
+
+const STATE_TRANSFORMS: Partial<Record<StateCode, string>> = {
+  AK: "translate(-180 -390)",
+  HI: "translate(-145 -165)",
+};
+
+type SplitOverlay = {
+  id: string;
+  code: StateCode;
+  regionId: RegionId;
+  clip: { x: number; y: number; width: number; height: number };
+};
+
+const SPLIT_STATE_OVERLAYS: SplitOverlay[] = [
+  {
+    id: "split-nv-west",
+    code: "NV",
+    regionId: "westHawaii",
+    clip: { x: 77, y: 166, width: 56, height: 174 },
+  },
+  {
+    id: "split-fl-panhandle-west",
+    code: "FL",
+    regionId: "southeast",
+    clip: { x: 635, y: 442, width: 66, height: 36 },
+  },
+  {
+    id: "split-ny-downstate-li",
+    code: "NY",
+    regionId: "midAtlantic",
+    clip: { x: 818, y: 152, width: 92, height: 60 },
+  },
+];
+
+const SPLIT_OVERLAYS_BY_CODE = SPLIT_STATE_OVERLAYS.reduce((acc, overlay) => {
+  if (!acc[overlay.code]) acc[overlay.code] = [];
+  acc[overlay.code].push(overlay);
+  return acc;
+}, {} as Record<StateCode, SplitOverlay[]>);
+
 const REGION_FILL: Record<RegionId, string> = {
   westernCanada: "#d8ecff",
   easternCanada: "#c7e3ff",
@@ -316,6 +358,9 @@ export default function GeographicalVariations() {
   const [hoveredRegion, setHoveredRegion] = useState<RegionId | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<RegionId | null>(null);
   const activeRegionId = hoveredRegion ?? selectedRegion;
+  const connectorRegions = MAP_REGIONS.filter(
+    (region) => !CONNECTOR_HIDDEN_REGIONS.includes(region.id)
+  );
 
   const activate = (id: RegionId) => setHoveredRegion(id);
   const toggleSelection = (id: RegionId) =>
@@ -354,6 +399,20 @@ export default function GeographicalVariations() {
                 <clipPath id="canada-east-half" clipPathUnits="objectBoundingBox">
                   <rect x="0.5" y="0" width="0.5" height="1" />
                 </clipPath>
+                {SPLIT_STATE_OVERLAYS.map((overlay) => (
+                  <clipPath
+                    key={overlay.id}
+                    id={overlay.id}
+                    clipPathUnits="userSpaceOnUse"
+                  >
+                    <rect
+                      x={overlay.clip.x}
+                      y={overlay.clip.y}
+                      width={overlay.clip.width}
+                      height={overlay.clip.height}
+                    />
+                  </clipPath>
+                ))}
               </defs>
 
               <path
@@ -385,13 +444,13 @@ export default function GeographicalVariations() {
                 y1={-170}
                 x2={CANADA_SPLIT_X}
                 y2={70}
-                stroke="rgba(0, 0, 0, 0.82)"
+                stroke="#111111"
                 strokeWidth={1.8}
               />
               <path
                 d={CANADA_OUTLINE_PATH}
                 fill="none"
-                stroke="rgba(0, 0, 0, 0.8)"
+                stroke="#111111"
                 strokeWidth={1.9}
                 pointerEvents="none"
               />
@@ -404,36 +463,63 @@ export default function GeographicalVariations() {
                     ? REGION_FILL_ACTIVE[regionId]
                     : REGION_FILL[regionId]
                   : "#e8f1fb";
+                const splitOverlays = SPLIT_OVERLAYS_BY_CODE[code as StateCode] ?? [];
+                const stateTransform = STATE_TRANSFORMS[code as StateCode];
 
                 return (
-                  <path
-                    key={code}
-                    d={state.d}
-                    fill={fillColor}
-                    stroke="rgba(0, 0, 0, 0.78)"
-                    strokeWidth={isActive ? 2.8 : 1.9}
-                    className={
-                      regionId
-                        ? "cursor-pointer transition-colors duration-150"
-                        : "transition-colors duration-150"
-                    }
-                    onMouseEnter={() => regionId && activate(regionId)}
-                    onClick={() => regionId && toggleSelection(regionId)}
-                  />
+                  <g key={code}>
+                    <path
+                      d={state.d}
+                      fill={fillColor}
+                      stroke="#111111"
+                      strokeWidth={isActive ? 2.8 : 1.9}
+                      transform={stateTransform}
+                      className={
+                        regionId
+                          ? "cursor-pointer transition-colors duration-150"
+                          : "transition-colors duration-150"
+                      }
+                      onMouseEnter={() => regionId && activate(regionId)}
+                      onClick={() => regionId && toggleSelection(regionId)}
+                    />
+                    {splitOverlays.map((overlay) => {
+                      const isSplitActive = overlay.regionId === activeRegionId;
+                      const splitFill = isSplitActive
+                        ? REGION_FILL_ACTIVE[overlay.regionId]
+                        : REGION_FILL[overlay.regionId];
+
+                      return (
+                        <path
+                          key={overlay.id}
+                          d={state.d}
+                          fill={splitFill}
+                          stroke="none"
+                          clipPath={`url(#${overlay.id})`}
+                          transform={stateTransform}
+                          className="cursor-pointer transition-colors duration-150"
+                          onMouseEnter={() => activate(overlay.regionId)}
+                          onClick={() => toggleSelection(overlay.regionId)}
+                        />
+                      );
+                    })}
+                  </g>
                 );
               })}
             </g>
 
-            {MAP_REGIONS.map((region) => {
+            {connectorRegions.map((region, index) => {
               const isActive = region.id === activeRegionId;
               const mapX = toCanvasX(region.mapPoint.x);
               const mapY = toCanvasY(region.mapPoint.y);
+              const longLength = 20;
+              const shortLength = 10;
+              const alternatingLength = index % 2 === 0 ? longLength : shortLength;
               const lineEndX =
                 region.labelAnchor === "start"
-                  ? region.labelPoint.x - 10
+                  ? region.labelPoint.x - alternatingLength
                   : region.labelAnchor === "end"
-                  ? region.labelPoint.x + 10
-                  : region.labelPoint.x;
+                  ? region.labelPoint.x + alternatingLength
+                  : region.labelPoint.x + (index % 2 === 0 ? 14 : -14);
               const stateLines = wrapStates(
                 region.stateNames,
                 region.labelAnchor === "middle" ? 44 : 36
@@ -451,7 +537,7 @@ export default function GeographicalVariations() {
                     y1={mapY}
                     x2={lineEndX}
                     y2={region.labelPoint.y}
-                    stroke={isActive ? "#000000" : "rgba(0, 0, 0, 0.74)"}
+                    stroke="#111111"
                     strokeWidth={isActive ? 2.4 : 1.8}
                   />
                   <circle
@@ -505,6 +591,21 @@ export default function GeographicalVariations() {
               );
             })}
           </svg>
+          <p className="mt-4 text-xs text-[var(--color-text-muted)]">
+            Sub-state split handling is applied for Western Nevada (Denco),
+            Western Florida panhandle (Phil Thomas), and Long Island / NYC Metro
+            (Kehoe).
+          </p>
+          <p
+            className={`mt-1 text-xs transition-colors ${
+              activeRegionId === "mountainWest"
+                ? "text-[var(--color-primary-3)] font-semibold"
+                : "text-[var(--color-text-muted)]"
+            }`}
+          >
+            Mountain / Interior West is currently open. Hover that region on the
+            map to highlight it.
+          </p>
         </div>
       </div>
     </section>
