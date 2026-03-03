@@ -453,6 +453,8 @@ export default function GeographicalVariations() {
               {Object.entries(US_STATE_PATHS).map(([code, state]) => {
                 const regionId = STATE_TO_REGION[code];
                 const isActive = regionId ? regionId === activeRegionId : false;
+                const stateStroke = isActive ? "#111111" : "transparent";
+                const stateStrokeWidth = isActive ? 3 : 0;
                 const fillColor = regionId
                   ? isActive
                     ? REGION_FILL_ACTIVE[regionId]
@@ -466,8 +468,8 @@ export default function GeographicalVariations() {
                     <path
                       d={state.d}
                       fill={fillColor}
-                      stroke="#111111"
-                      strokeWidth={3}
+                      stroke={stateStroke}
+                      strokeWidth={stateStrokeWidth}
                       transform={stateTransform}
                       className={
                         regionId
@@ -481,14 +483,16 @@ export default function GeographicalVariations() {
                       const splitFill = isSplitActive
                         ? REGION_FILL_ACTIVE[overlay.regionId]
                         : REGION_FILL[overlay.regionId];
+                      const splitStroke = isSplitActive ? "#111111" : "transparent";
+                      const splitStrokeWidth = isSplitActive ? 3 : 0;
 
                       return (
                         <path
                           key={overlay.id}
                           d={state.d}
                           fill={splitFill}
-                          stroke="#111111"
-                          strokeWidth={3}
+                          stroke={splitStroke}
+                          strokeWidth={splitStrokeWidth}
                           clipPath={`url(#${overlay.id})`}
                           transform={stateTransform}
                           className="cursor-pointer transition-colors duration-150"
