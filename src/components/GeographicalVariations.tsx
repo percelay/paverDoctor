@@ -77,9 +77,9 @@ const CANADA_REGIONS: CanadaMapRegion[] = [
       "Prince Edward Island",
       "Newfoundland and Labrador",
     ],
-    mapPoint: { x: 660, y: -36 },
-    labelPoint: { x: 1145, y: 190 },
-    labelAnchor: "start",
+    mapPoint: { x: 660, y: -170 },
+    labelPoint: { x: 813, y: 120 },
+    labelAnchor: "middle",
   },
 ];
 
@@ -172,7 +172,7 @@ const US_REGIONS: USMapRegion[] = [
       "West Virginia",
     ],
     mapPoint: { x: 558, y: 242 },
-    labelPoint: { x: 905, y: 220 },
+    labelPoint: { x: 955, y: 280 },
     labelAnchor: "middle",
   },
   {
@@ -356,15 +356,12 @@ function wrapStates(states: string[], maxLineLength = 40) {
 
 export default function GeographicalVariations() {
   const [hoveredRegion, setHoveredRegion] = useState<RegionId | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<RegionId | null>(null);
-  const activeRegionId = hoveredRegion ?? selectedRegion;
+  const activeRegionId = hoveredRegion;
   const connectorRegions = MAP_REGIONS.filter(
     (region) => !CONNECTOR_HIDDEN_REGIONS.includes(region.id)
   );
 
   const activate = (id: RegionId) => setHoveredRegion(id);
-  const toggleSelection = (id: RegionId) =>
-    setSelectedRegion((prev) => (prev === id ? null : id));
 
   return (
     <section id="reps" className="site-section section-alt section-shell">
@@ -425,7 +422,6 @@ export default function GeographicalVariations() {
                 clipPath="url(#canada-west-half)"
                 className="cursor-pointer transition-colors duration-150"
                 onMouseEnter={() => activate("westernCanada")}
-                onClick={() => toggleSelection("westernCanada")}
               />
               <path
                 d={CANADA_OUTLINE_PATH}
@@ -437,7 +433,6 @@ export default function GeographicalVariations() {
                 clipPath="url(#canada-east-half)"
                 className="cursor-pointer transition-colors duration-150"
                 onMouseEnter={() => activate("easternCanada")}
-                onClick={() => toggleSelection("easternCanada")}
               />
               <line
                 x1={CANADA_SPLIT_X}
@@ -445,13 +440,13 @@ export default function GeographicalVariations() {
                 x2={CANADA_SPLIT_X}
                 y2={70}
                 stroke="#111111"
-                strokeWidth={1.8}
+                strokeWidth={3}
               />
               <path
                 d={CANADA_OUTLINE_PATH}
                 fill="none"
                 stroke="#111111"
-                strokeWidth={1.9}
+                strokeWidth={3}
                 pointerEvents="none"
               />
 
@@ -472,7 +467,7 @@ export default function GeographicalVariations() {
                       d={state.d}
                       fill={fillColor}
                       stroke="#111111"
-                      strokeWidth={isActive ? 2.8 : 1.9}
+                      strokeWidth={3}
                       transform={stateTransform}
                       className={
                         regionId
@@ -480,7 +475,6 @@ export default function GeographicalVariations() {
                           : "transition-colors duration-150"
                       }
                       onMouseEnter={() => regionId && activate(regionId)}
-                      onClick={() => regionId && toggleSelection(regionId)}
                     />
                     {splitOverlays.map((overlay) => {
                       const isSplitActive = overlay.regionId === activeRegionId;
@@ -493,12 +487,12 @@ export default function GeographicalVariations() {
                           key={overlay.id}
                           d={state.d}
                           fill={splitFill}
-                          stroke="none"
+                          stroke="#111111"
+                          strokeWidth={3}
                           clipPath={`url(#${overlay.id})`}
                           transform={stateTransform}
                           className="cursor-pointer transition-colors duration-150"
                           onMouseEnter={() => activate(overlay.regionId)}
-                          onClick={() => toggleSelection(overlay.regionId)}
                         />
                       );
                     })}
@@ -515,14 +509,22 @@ export default function GeographicalVariations() {
               const shortLength = 10;
               const alternatingLength = index % 2 === 0 ? longLength : shortLength;
               const lineEndX =
-                region.labelAnchor === "start"
+                region.id === "easternCanada"
+                  ? region.labelPoint.x
+                  : region.labelAnchor === "start"
                   ? region.labelPoint.x - alternatingLength
                   : region.labelAnchor === "end"
                   ? region.labelPoint.x + alternatingLength
                   : region.labelPoint.x + (index % 2 === 0 ? 14 : -14);
+              const lineLimit =
+                region.id === "midwest"
+                  ? 32
+                  : region.labelAnchor === "middle"
+                  ? 44
+                  : 36;
               const stateLines = wrapStates(
                 region.stateNames,
-                region.labelAnchor === "middle" ? 44 : 36
+                lineLimit
               );
 
               return (
@@ -530,7 +532,6 @@ export default function GeographicalVariations() {
                   key={region.id}
                   className="cursor-pointer"
                   onMouseEnter={() => activate(region.id)}
-                  onClick={() => toggleSelection(region.id)}
                 >
                   <line
                     x1={mapX}
