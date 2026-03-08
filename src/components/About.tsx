@@ -1,10 +1,10 @@
-import { Building2, Globe, Package, Truck } from "lucide-react";
+import { Calendar, MapPin, Home, Building2 } from "lucide-react";
 
 const highlights = [
-  { icon: Building2, label: "Founded 1986"            },
-  { icon: Globe,     label: "USA & Canada"             },
-  { icon: Package,   label: "Commercial & Residential" },
-  { icon: Truck,     label: "Central Warehouse"        },
+  { icon: Calendar,  label: "20+ Years Experience"       },
+  { icon: MapPin,    label: "Tampa Bay Area & Florida"    },
+  { icon: Home,      label: "Residential Projects"        },
+  { icon: Building2, label: "Commercial Properties"       },
 ];
 
 export default function About() {
@@ -35,35 +35,32 @@ export default function About() {
               className="text-3xl lg:text-4xl font-bold mb-6 leading-tight"
               style={{ color: "var(--color-text-main)" }}
             >
-              MarketAir,{" "}
-              <span className="gradient-text">Inc.</span>
+              The Florida Pavers{" "}
+              <span className="gradient-text">Doctors, Inc.</span>
             </h2>
             <div
               className="space-y-4 leading-relaxed text-[15px]"
               style={{ color: "var(--color-text-muted)" }}
             >
               <p>
-                Originally founded as a manufacturer&apos;s representative company by
-                Gerry Spanger in April 1986, MarketAir, Inc. reinvented itself in
-                January 2016 as an importer, exporter, manufacturer and distributor
-                specializing in installation components and accessories for the
-                HVACR industry.
+                For over 20 years, The Florida Pavers Doctors, Inc. has been
+                repairing, cleaning, re-sanding, and sealing concrete and brick
+                pavers across Tampa Bay and throughout Florida. We bring the same
+                care and expertise to every job — whether it&apos;s a backyard pool
+                deck or a commercial shopping center.
               </p>
               <p>
-                We have developed and acquired a number of innovative new products
-                for commercial and residential applications, and cover both the
-                ducted and ductless sectors, as well as the fast developing VRF/VRV
-                market. These include our own dedicated products which are
-                manufactured to our specifications, as well as a range of imported
-                items sourced from international manufacturers.
+                Our team is professional, courteous, and efficient. We take time
+                to assess each project individually and recommend the right
+                approach — never more than what&apos;s needed, always done right.
+                Free estimates are available Monday through Saturday during
+                normal business hours, with exceptions made for customers who
+                work during the day.
               </p>
               <p>
-                In addition, we act as a national distributor for smaller
-                independent USA manufacturers who do not have their own sales
-                organizations. MarketAir has a national network of manufacturers&apos;
-                reps who sell our products into the HVACR industry through wholesale
-                distribution and operates a centrally situated warehouse from which
-                its products are shipped throughout the USA and Canada.
+                If you&apos;re looking for a high-quality paver restoration contractor
+                you can trust, you&apos;ve come to the right place. Call us today for
+                your free evaluation.
               </p>
             </div>
           </div>

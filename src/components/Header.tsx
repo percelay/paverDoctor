@@ -5,12 +5,10 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "About",     href: "#about"     },
-  { label: "Products",  href: "#services"  },
-  { label: "Reps",      href: "#reps"      },
-  { label: "Downloads", href: "#downloads" },
-  { label: "Warranty",  href: "#warranty"  },
-  { label: "Contact",   href: "#contact"   },
+  { label: "About",    href: "#about"    },
+  { label: "Services", href: "#services" },
+  { label: "Gallery",  href: "#gallery"  },
+  { label: "Contact",  href: "#contact"  },
 ];
 
 export default function Header() {
@@ -25,12 +23,12 @@ export default function Header() {
           <a
             href="#"
             className="group flex h-full items-center -ml-4 sm:-ml-6 lg:-ml-8"
-            aria-label="MarketAir home"
+            aria-label="The Florida Pavers Doctors home"
           >
             <div className="relative h-full w-[160px] sm:w-[185px] lg:w-[220px] overflow-hidden transition-all duration-300 group-hover:-translate-y-0.5">
               <Image
-                src="/images/marketair logo.avif"
-                alt="MarketAir logo"
+                src="/images/ThePaverDoctors-Logo2.png"
+                alt="The Florida Pavers Doctors logo"
                 fill
                 sizes="(min-width: 1024px) 220px, (min-width: 640px) 185px, 160px"
                 className="object-contain object-left"
@@ -54,14 +52,14 @@ export default function Header() {
               </a>
             ))}
             <a
-              href="#services"
+              href="tel:8135754300"
               className="ml-3 px-5 py-2 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
               style={{
                 background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)",
                 boxShadow: "0 8px 18px rgba(16,33,58,0.14)",
               }}
             >
-              Buy Products
+              Free Estimate
             </a>
           </nav>
 
@@ -102,7 +100,7 @@ export default function Header() {
               </a>
             ))}
             <a
-              href="#services"
+              href="tel:8135754300"
               onClick={() => setMobileOpen(false)}
               className="mt-2 px-5 py-3 rounded-xl text-sm font-semibold text-white text-center transition-all duration-200 hover:opacity-90"
               style={{
@@ -110,7 +108,7 @@ export default function Header() {
                 boxShadow: "0 8px 18px rgba(16,33,58,0.14)",
               }}
             >
-              Buy Products
+              Free Estimate — 813-575-4300
             </a>
           </div>
         </div>

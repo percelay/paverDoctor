@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MarketAir, Inc. — Components for Environmental Systems",
+  title: "The Florida Pavers Doctors, Inc. — Paver Repair, Cleaning & Sealing",
   description:
-    "Importer, exporter, manufacturer, and distributor specializing in installation components and accessories for the HVACR industry.",
+    "Tampa Bay's trusted paver restoration experts for over 20 years. Concrete and brick paver repairs, cleaning, re-sanding, and sealing for residential and commercial properties.",
 };
 
 export default function RootLayout({

@@ -2,9 +2,9 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
-import GeographicalVariations from "@/components/GeographicalVariations";
-import Downloads from "@/components/Downloads";
-import Warranty from "@/components/Warranty";
+import Gallery from "@/components/GeographicalVariations";
+import ServiceAreas from "@/components/Downloads";
+import EstimateBanner from "@/components/Warranty";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -16,9 +16,9 @@ export default function Home() {
         <Hero />
         <About />
         <Services />
-        <GeographicalVariations />
-        <Downloads />
-        <Warranty />
+        <Gallery />
+        <ServiceAreas />
+        <EstimateBanner />
         <Contact />
       </main>
       <Footer />
