@@ -56,7 +56,7 @@ export default function Header() {
               className="ml-3 px-5 py-2 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5"
               style={{
                 background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)",
-                boxShadow: "0 8px 18px rgba(16,33,58,0.14)",
+                boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
               }}
             >
               Free Estimate
@@ -93,7 +93,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[rgba(18,148,216,0.08)]"
+                className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[rgba(27,67,50,0.08)]"
                 style={{ color: "var(--color-text-muted)" }}
               >
                 {link.label}
@@ -105,7 +105,7 @@ export default function Header() {
               className="mt-2 px-5 py-3 rounded-xl text-sm font-semibold text-white text-center transition-all duration-200 hover:opacity-90"
               style={{
                 background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%)",
-                boxShadow: "0 8px 18px rgba(16,33,58,0.14)",
+                boxShadow: "0 8px 18px rgba(0,0,0,0.14)",
               }}
             >
               Free Estimate — 813-575-4300

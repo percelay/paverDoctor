@@ -16,8 +16,8 @@ export default function Contact() {
             <div
               className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
               style={{
-                background: "linear-gradient(135deg, rgba(91,202,247,0.18) 0%, rgba(30,111,168,0.12) 100%)",
-                border: "1px solid rgba(91,202,247,0.20)",
+                background: "linear-gradient(135deg, rgba(27,67,50,0.14) 0%, rgba(27,67,50,0.08) 100%)",
+                border: "1px solid rgba(27,67,50,0.20)",
               }}
             >
               <Phone className="w-5 h-5 text-[var(--color-primary)]" />
@@ -41,8 +41,8 @@ export default function Contact() {
             <div
               className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
               style={{
-                background: "linear-gradient(135deg, rgba(91,202,247,0.18) 0%, rgba(30,111,168,0.12) 100%)",
-                border: "1px solid rgba(91,202,247,0.20)",
+                background: "linear-gradient(135deg, rgba(27,67,50,0.14) 0%, rgba(27,67,50,0.08) 100%)",
+                border: "1px solid rgba(27,67,50,0.20)",
               }}
             >
               <Clock className="w-5 h-5 text-[var(--color-primary)]" />
