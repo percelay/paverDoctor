@@ -93,7 +93,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[rgba(27,67,50,0.08)]"
+                className="px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:bg-[rgba(29,78,216,0.05)]"
                 style={{ color: "var(--color-text-muted)" }}
               >
                 {link.label}

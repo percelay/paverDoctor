@@ -2,7 +2,7 @@
 
 /* Design Tokens */
 @theme {
-  /* Palette */
+  /* Palette — red primary, blue accent */
   --color-bg: #ffffff;
   --color-bg-2: #f4f4f4;
   --color-bg-3: #ebebeb;
@@ -11,20 +11,20 @@
   --color-surface-2: rgba(255, 255, 255, 0.96);
   --color-surface-3: rgba(250, 250, 250, 0.98);
 
-  --color-primary: #1b4332;
-  --color-primary-2: #2d6a4f;
-  --color-primary-3: #0a2318;
-  --color-accent: #c9a227;
-  --color-accent-2: #e8c547;
+  --color-primary: #b91c1c;
+  --color-primary-2: #dc2626;
+  --color-primary-3: #7f1d1d;
+  --color-accent: #1d4ed8;
+  --color-accent-2: #3b82f6;
 
   --color-text-main: #0d0d0d;
   --color-text-muted: #3d3d3d;
   --color-text-dim: #6b6b6b;
 
-  --color-border: rgba(0, 0, 0, 0.12);
-  --color-border-soft: rgba(0, 0, 0, 0.07);
-  --color-border-strong: rgba(201, 162, 39, 0.6);
-  --color-border-3: rgba(201, 162, 39, 0.6);
+  --color-border: rgba(29, 78, 216, 0.15);
+  --color-border-soft: rgba(29, 78, 216, 0.08);
+  --color-border-strong: rgba(185, 28, 28, 0.35);
+  --color-border-3: rgba(185, 28, 28, 0.35);
 
   /* Blur */
   --blur-xs: 4px;
@@ -56,8 +56,8 @@
   --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.07);
   --shadow-glass: 0 14px 34px rgba(0, 0, 0, 0.09);
   --shadow-lift: 0 18px 42px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 20px rgba(27, 67, 50, 0.2);
-  --shadow-glow-lg: 0 0 32px rgba(201, 162, 39, 0.35);
+  --shadow-glow: 0 0 20px rgba(185, 28, 28, 0.22);
+  --shadow-glow-lg: 0 0 32px rgba(29, 78, 216, 0.28);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
@@ -80,8 +80,8 @@ body {
 }
 
 ::selection {
-  background: rgba(201, 162, 39, 0.25);
-  color: #0a2318;
+  background: rgba(185, 28, 28, 0.15);
+  color: #7f1d1d;
 }
 
 /* Reusable Glass Utilities */
@@ -103,7 +103,7 @@ body {
   width: 24rem;
   height: 24rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(27, 67, 50, 0.06) 0%, transparent 72%);
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.07) 0%, transparent 72%);
   pointer-events: none;
 }
 
@@ -114,7 +114,7 @@ body {
   width: 25rem;
   height: 25rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(0, 0, 0, 0.03) 0%, transparent 74%);
+  background: radial-gradient(circle, rgba(185, 28, 28, 0.07) 0%, transparent 74%);
   pointer-events: none;
 }
 
@@ -169,7 +169,7 @@ body {
 
 .glass-chip {
   border: 1px solid var(--color-border);
-  background: #f4f4f4;
+  background: rgba(29, 78, 216, 0.05);
 }
 
 .ice-divider {
@@ -218,8 +218,8 @@ body {
 
 .btn-glass:hover {
   transform: translateY(-2px);
-  border-color: var(--color-primary);
-  background: #f4f4f4;
+  border-color: var(--color-accent);
+  background: rgba(29, 78, 216, 0.05);
 }
 
 /* Typography */

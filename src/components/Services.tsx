@@ -74,8 +74,8 @@ export default function Services() {
                 <div
                   className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
                   style={{
-                    background: "linear-gradient(135deg, rgba(27,67,50,0.14) 0%, rgba(27,67,50,0.08) 100%)",
-                    border: "1px solid rgba(27,67,50,0.20)",
+                    background: "linear-gradient(135deg, rgba(29,78,216,0.10) 0%, rgba(29,78,216,0.05) 100%)",
+                    border: "1px solid rgba(29,78,216,0.18)",
                   }}
                 >
                   <Icon className="w-5 h-5 text-[var(--color-primary)]" />
